@@ -4,7 +4,17 @@ import './bootstrap.css'
 
 class Timing extends Component {
     
-  
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+             day:0,
+             hour:0,
+             minute:0,
+             second:0
+        };
+    }
+    
     render() {
         
         const countdown = new Date("August 15, 2019 12:00:00").getTime();
@@ -14,13 +24,26 @@ class Timing extends Component {
             var currentDate = new Date().getTime();
             var difference = countdown-currentDate; 
             
-          
+            var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            days = (days < 10)?("0"+days):days;
+            var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            hours = (hours < 10)?("0"+hours):hours;
+            var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            minutes = (minutes < 10)?("0"+minutes):minutes;
+            var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            seconds = (seconds < 10)?("0"+seconds):seconds;
 
             updateTime(days,hours,minutes,seconds);
             
         },1000);
 
-
+        const updateTime = (days, hours, minutes, seconds) => {
+            this.setState({
+                 day: days,
+                 hour: hours,
+                 minute: minutes,
+                 second: seconds
+            })    
         }
 
 
@@ -44,5 +67,3 @@ class Timing extends Component {
 }
 
 export default Timing
-
-
